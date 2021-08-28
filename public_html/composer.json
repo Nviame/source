@@ -1,0 +1,10 @@
+{
+    "require": {
+        "propel/propel": "~2.0@dev",
+        "monolog/monolog": "^1.26",
+        "firebase/php-jwt": "^5.2"
+    },
+    "autoload": {
+        "classmap": ["ormnv/generated-classes/"]
+    }
+}

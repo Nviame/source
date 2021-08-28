@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "925023001096",
+    "firebase_url": "https://nviame-3a5fe.firebaseio.com",
+    "project_id": "nviame-3a5fe",
+    "storage_bucket": "nviame-3a5fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925023001096:android:a8be7eb4e2cf5847438fbd",
+        "android_client_info": {
+          "package_name": "com.nviame.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925023001096-h9do624h2os6epdp4b1v9ooeahoj01i7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKRt674hR3hn9vpXYCzhC49QpZCJ7TRPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925023001096-h9do624h2os6epdp4b1v9ooeahoj01i7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

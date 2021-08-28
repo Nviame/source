@@ -1,0 +1,131 @@
+
+body {
+  height:100%;
+  margin-top: 30px;
+  background-color: #eee;
+  font-family: Gibson, sans-serif;
+}
+p {
+  line-height: 1.7;
+    font-size: 19px;
+    
+    font-weight: 100;}
+
+.list-group.help-group {
+  margin-bottom: 20px;
+  padding-left: 0;
+  margin: 0;
+}
+.list-group.help-group .faq-list {
+  display: block;
+  top: auto;
+  margin: 0 0 32px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+}
+.list-group.help-group .faq-list .list-group-item {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 13px 16px;
+  background-color: #fff;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  color: #616161;
+  transition: background-color .2s;
+  font-size: larger;
+}
+.list-group.help-group .faq-list .list-group-item i.mdi {
+  margin-right: 5px;
+  font-size: 18px;
+  position: relative;
+  top: 2px;
+}
+.list-group.help-group .faq-list .list-group-item:hover {
+  background-color: #f6f6f6;
+}
+.list-group.help-group .faq-list .list-group-item.active {
+  background-color: #f6f6f6;
+  font-weight: 700;
+  color: #4C00FF;
+  font-size: large;
+}
+.list-group.help-group .faq-list .list-group-item:last-of-type {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom: 0;
+}
+
+.tab-content.panels-faq {
+  padding: 0;
+  border: 0;
+}
+
+.panel.panel-help {
+  box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+  padding-bottom: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #fff;
+  margin: 0 0 16px;
+}
+.panel.panel-help a[href^="#"],
+.panel.panel-help a[href^="#"]:hover,
+.panel.panel-help a[href^="#"]:focus {
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.panel.panel-help .panel-heading {
+  background-color: #4C00FF;
+  padding: 0 16px;
+  line-height: 48px;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  color: rgb(255 255 255 / 100%);
+}
+.panel.panel-help .panel-heading h2 {
+  margin: 0;
+  padding: 14px 0 14px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.panel.panel-help .panel-body {
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-radius: 2px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  margin-top: 0;
+}
+.panel.panel-help .panel-body p {
+  margin: 0 0 16px;
+}
+.panel.panel-help .panel-body p:last-of-type {
+  margin: 0;
+}
+.margin-logo-faq {margin:5px 0px 45px 0px}
+@font-face {
+  font-family: 'Gibson';
+  src: url('https://uploads-ssl.webflow.com/5b0e0fedc0ec47cf8c46656d/5b0e143ea934a5fda476cf00_Gibson-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gibson';
+  src: url('https://uploads-ssl.webflow.com/5b0e0fedc0ec47cf8c46656d/5b0e14464761fb817452ee52_Gibson-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gibson';
+  src: url('https://uploads-ssl.webflow.com/5b0e0fedc0ec47cf8c46656d/5b0e14434761fb3fb552ee51_Gibson-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}

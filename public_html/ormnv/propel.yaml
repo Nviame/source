@@ -1,0 +1,39 @@
+propel:
+  database:
+      connections:
+          default:
+            adapter: mysql
+            classname: Propel\Runtime\Connection\DebugPDO
+            dsn: mysql:host=localhost;dbname=nviame
+            user: nviame_app
+            password: RB1fr30a
+            attributes:
+            settings:
+                charset: utf8mb4
+                queries:
+                    utf8: "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci, COLLATION_CONNECTION = utf8mb4_unicode_ci, COLLATION_DATABASE = utf8mb4_unicode_ci, COLLATION_SERVER = utf8mb4_unicode_ci"
+          nviame:
+              adapter: mysql
+              classname: Propel\Runtime\Connection\DebugPDO
+              dsn: mysql:host=localhost;dbname=nviame
+              user: nviame_app
+              password: RB1fr30a
+              attributes:
+  runtime:
+      defaultConnection: default
+      connections:
+          - default
+          - nviame
+      log:
+          defaultLogger:
+              type: stream
+              path: log/propel.log
+              level: 300
+          nviame:
+              type: stream
+              path: log/propel_nviame.log
+  generator:
+      defaultConnection: nviame
+      connections:
+          - default
+          - nviame

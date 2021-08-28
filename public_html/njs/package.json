@@ -1,0 +1,30 @@
+{
+  "name": "nviame",
+  "version": "1.0.0",
+  "description": "nviame app node.js module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nviame",
+    "shipments",
+    "delivery"
+  ],
+  "author": "Carlos Schmidt",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "fcm-node": "^1.5.2",
+    "firebase-admin": "^8.13.0",
+    "mercadopago": "^1.3.2",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
+    "node-geocoder": "^3.27.0",
+    "onesignal-node": "^3.2.1",
+    "promise-mysql": "^4.1.3",
+    "redis": "^3.0.2",
+    "socket.io": "^2.3.0"
+  }
+}

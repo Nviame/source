@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="administrators" idMethod="native" phpName="Administrators">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="username" phpName="Username" type="VARCHAR" size="64"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="96"/>
+    <column name="display_name" phpName="DisplayName" type="VARCHAR" size="64"/>
+    <column name="last_login" phpName="LastLogin" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="chats" idMethod="native" phpName="Chats">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_transmitter" phpName="IdTransmitter" type="INTEGER"/>
+    <column name="id_receiver" phpName="IdReceiver" type="INTEGER"/>
+    <column name="message" phpName="Message" type="LONGVARCHAR"/>
+    <column name="transmitter_date_sent" phpName="TransmitterDateSent" type="TIMESTAMP"/>
+    <column name="transmitter_date_reading" phpName="TransmitterDateReading" type="TIMESTAMP"/>
+    <column name="receiver_date_sent" phpName="ReceiverDateSent" type="TIMESTAMP"/>
+    <column name="receiver_date_reading" phpName="ReceiverDateReading" type="TIMESTAMP"/>
+    <column name="archived_transmitter" phpName="ArchivedTransmitter" type="BOOLEAN" size="1" defaultValue="false"/>
+    <column name="archived_receiver" phpName="ArchivedReceiver" type="BOOLEAN" size="1" defaultValue="false"/>
+    <column name="attachment_file" phpName="AttachmentFile" type="VARCHAR" size="64"/>
+    <column name="attachment_group" phpName="AttachmentGroup" type="BIGINT"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces" idMethod="native" phpName="Commerces">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_position_commerce" phpName="IdPositionCommerce" type="INTEGER"/>
+    <column name="id_heading_commerce" phpName="IdHeadingCommerce" type="INTEGER"/>
+    <column name="id_province" phpName="IdProvince" type="INTEGER"/>
+    <column name="id_locality" phpName="IdLocality" type="INTEGER"/>
+    <column name="token" phpName="Token" type="LONGVARCHAR"/>
+    <column name="logo" phpName="Logo" type="VARCHAR" size="64"/>
+    <column name="business_name" phpName="BusinessName" type="VARCHAR" size="96"/>
+    <column name="cuit_cuil" phpName="CuitCuil" type="VARCHAR" size="48"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" size="16"/>
+    <column name="phone_personal" phpName="PhonePersonal" type="VARCHAR" size="16"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="64"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="96"/>
+    <column name="address" phpName="Address" type="VARCHAR"/>
+    <column name="address_lat" phpName="AddressLat" type="VARCHAR" size="64"/>
+    <column name="address_lng" phpName="AddressLng" type="VARCHAR" size="64"/>
+    <column name="address_locality" phpName="AddressLocality" type="VARCHAR" size="64"/>
+    <column name="address_region" phpName="AddressRegion" type="VARCHAR" size="64"/>
+    <column name="address_country" phpName="AddressCountry" type="VARCHAR" size="24"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="positions_commerce" name="commerces_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_position_commerce" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="headings_commerce" name="commerces_ibfk_2" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_heading_commerce" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="provinces" name="commerces_ibfk_3" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_province" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="provinces_localities" name="commerces_ibfk_4" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_locality" foreign="id"/>
+    </foreign-key>
+    <index name="id_position_commerce">
+      <index-column name="id_position_commerce"/>
+    </index>
+    <index name="id_heading_commerce">
+      <index-column name="id_heading_commerce"/>
+    </index>
+    <index name="id_province">
+      <index-column name="id_province"/>
+    </index>
+    <index name="id_locality">
+      <index-column name="id_locality"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_branch_offices" idMethod="native" phpName="CommercesBranchOffices">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <column name="address" phpName="Address" type="VARCHAR" size="96"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="commerces" name="commerces_branch_offices_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_commerce" foreign="id"/>
+    </foreign-key>
+    <index name="id_commerce">
+      <index-column name="id_commerce"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_clients" idMethod="native" phpName="CommercesClients">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="id_locality" phpName="IdLocality" type="INTEGER"/>
+    <column name="id_province" phpName="IdProvince" type="INTEGER"/>
+    <column name="fullname" phpName="Fullname" type="VARCHAR" size="64"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="64"/>
+    <column name="address" phpName="Address" type="VARCHAR" size="96"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" size="16"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="provinces_localities" name="commerces_clients_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_locality" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="provinces" name="commerces_clients_ibfk_2" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_province" foreign="id"/>
+    </foreign-key>
+    <index name="id_locality">
+      <index-column name="id_locality"/>
+    </index>
+    <index name="id_province">
+      <index-column name="id_province"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_preferences" idMethod="native" phpName="CommercesPreferences">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="max_offers" phpName="MaxOffers" type="INTEGER"/>
+    <column name="send_mails" phpName="SendMails" type="BOOLEAN" size="1"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="commerces" name="commerces_preferences_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_commerce" foreign="id"/>
+    </foreign-key>
+    <index name="id_commerce">
+      <index-column name="id_commerce"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_rates" idMethod="native" phpName="CommercesRates">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <column name="km" phpName="Km" type="FLOAT"/>
+    <column name="price" phpName="Price" type="DECIMAL" size="10" scale="2"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="commerces" name="commerces_rates_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_commerce" foreign="id"/>
+    </foreign-key>
+    <index name="id_commerce">
+      <index-column name="id_commerce"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_reminders" idMethod="native" phpName="CommercesReminders">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="icon" phpName="Icon" type="VARCHAR" size="48"/>
+    <column name="title" phpName="Title" type="VARCHAR" size="64"/>
+    <column name="content" phpName="Content" type="VARCHAR" size="96"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="commerces" name="commerces_reminders_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_commerce" foreign="id"/>
+    </foreign-key>
+    <index name="commerces_reminders_ibfk_1">
+      <index-column name="id_commerce"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="commerces_shipments" idMethod="native" phpName="CommercesShipments">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_commerce" phpName="IdCommerce" type="INTEGER"/>
+    <column name="id_rate" phpName="IdRate" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="uuid" phpName="Uuid" type="VARCHAR" size="48"/>
+    <column name="pickup_at_name" phpName="PickupAtName" type="VARCHAR"/>
+    <column name="pickup_at_lat" phpName="PickupAtLat" type="VARCHAR" size="32"/>
+    <column name="pickup_at_lng" phpName="PickupAtLng" type="VARCHAR" size="32"/>
+    <column name="pickup_at_locality" phpName="PickupAtLocality" type="VARCHAR" size="64"/>
+    <column name="pickup_at_region" phpName="PickupAtRegion" type="VARCHAR" size="56"/>
+    <column name="pickup_at_country" phpName="PickupAtCountry" type="VARCHAR" size="48"/>
+    <column name="size" phpName="Size" type="VARCHAR" size="8"/>
+    <column name="priority" phpName="Priority" type="INTEGER"/>
+    <column name="type" phpName="Type" type="INTEGER"/>
+    <column name="type_rate" phpName="TypeRate" type="INTEGER"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="96"/>
+    <column name="delivery_date" phpName="DeliveryDate" type="DATE"/>
+    <column name="delivery_address_lat" phpName="DeliveryAddressLat" type="VARCHAR" size="32"/>
+    <column name="delivery_address_lng" phpName="DeliveryAddressLng" type="VARCHAR" size="32"/>
+    <column name="delivery_address_locality" phpName="DeliveryAddressLocality" type="VARCHAR" size="64"/>
+    <column name="delivery_address_region" phpName="DeliveryAddressRegion" type="VARCHAR" size="56"/>
+    <column name="delivery_address_country" phpName="DeliveryAddressCountry" type="VARCHAR" size="48"/>
+    <column name="addressee_name" phpName="AddresseeName" type="VARCHAR" size="64"/>
+    <column name="addressee_phone" phpName="AddresseePhone" type="VARCHAR" size="48"/>
+    <column name="delivery_address" phpName="DeliveryAddress" type="VARCHAR" size="96"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <foreign-key foreignTable="commerces_rates" name="commerces_shipments_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_rate" foreign="id"/>
+    </foreign-key>
+    <index name="id_rate">
+      <index-column name="id_rate"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="companies" idMethod="native" phpName="Companies">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_company_contract_duration" phpName="IdCompanyContractDuration" type="INTEGER"/>
+    <column name="cuit" phpName="Cuit" type="VARCHAR" size="8"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <column name="rate_base_price" phpName="RateBasePrice" type="DOUBLE"/>
+    <column name="rate_price_km" phpName="RatePriceKm" type="DOUBLE"/>
+    <column name="rate_percent_night_schedule" phpName="RatePercentNightSchedule" type="DOUBLE"/>
+    <column name="rate_percent_non_business_day" phpName="RatePercentNonBusinessDay" type="DOUBLE"/>
+    <column name="percent_commission" phpName="PercentCommission" type="INTEGER"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" size="48"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="48"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="companies_contract_durations" idMethod="native" phpName="CompaniesContractDurations">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="16"/>
+    <column name="months" phpName="Months" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="countries" idMethod="native" phpName="Countries">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="iso" phpName="Iso" type="SMALLINT" required="true"/>
+    <column name="iso2" phpName="Iso2" type="CHAR" size="2" required="true"/>
+    <column name="iso3" phpName="Iso3" type="CHAR" size="3" required="true"/>
+    <column name="prefix" phpName="Prefix" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
+    <column name="continent" phpName="Continent" type="VARCHAR" size="16"/>
+    <column name="subcontinent" phpName="Subcontinent" type="VARCHAR" size="32"/>
+    <column name="currency_iso" phpName="CurrencyIso" type="VARCHAR" size="3"/>
+    <column name="currency_name" phpName="CurrencyName" type="VARCHAR" size="100"/>
+    <unique name="iso2">
+      <unique-column name="iso2"/>
+    </unique>
+    <unique name="iso3">
+      <unique-column name="iso3"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="gmaps_apikeys" idMethod="native" phpName="GmapsApikeys">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="api_key" phpName="ApiKey" type="LONGVARCHAR"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="associated_account_email" phpName="AssociatedAccountEmail" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="headings_commerce" idMethod="native" phpName="HeadingsCommerce">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notifications" idMethod="native" phpName="Notifications">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="id_offer" phpName="IdOffer" type="INTEGER"/>
+    <column name="title" phpName="Title" type="VARCHAR" size="64"/>
+    <column name="content" phpName="Content" type="LONGVARCHAR"/>
+    <column name="datetime" phpName="Datetime" type="TIMESTAMP"/>
+    <column name="readed" phpName="Readed" type="BOOLEAN" size="1"/>
+    <column name="group" phpName="Group" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notifications_deleted" idMethod="native" phpName="NotificationsDeleted">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER" size="255"/>
+    <column name="id_notification" phpName="IdNotification" type="INTEGER"/>
+    <column name="deleted_at" phpName="DeletedAt" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="positions_commerce" idMethod="native" phpName="PositionsCommerce">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="product_types" idMethod="native" phpName="ProductTypes">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="provinces" idMethod="native" phpName="Provinces">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="48"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="provinces_localities" idMethod="native" phpName="ProvincesLocalities">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_province" phpName="IdProvince" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="48"/>
+    <foreign-key foreignTable="provinces" name="provinces_localities_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="id_province" foreign="id"/>
+    </foreign-key>
+    <index name="id_province">
+      <index-column name="id_province"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments" idMethod="native" phpName="Shipments">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER" required="true"/>
+    <column name="id_product_type" phpName="IdProductType" type="INTEGER"/>
+    <column name="id_shipment_type" phpName="IdShipmentType" type="INTEGER" defaultValue="0"/>
+    <column name="id_status" phpName="IdStatus" type="INTEGER"/>
+    <column name="pin" phpName="Pin" type="VARCHAR" size="8" required="true"/>
+    <column name="start_address" phpName="StartAddress" type="VARCHAR"/>
+    <column name="start_address_place_id" phpName="StartAddressPlaceId" type="LONGVARCHAR"/>
+    <column name="start_address_lat" phpName="StartAddressLat" type="DECIMAL" size="8" scale="6"/>
+    <column name="start_address_lon" phpName="StartAddressLon" type="DECIMAL" size="9" scale="6"/>
+    <column name="start_address_locality" phpName="StartAddressLocality" type="VARCHAR" size="64"/>
+    <column name="start_address_region" phpName="StartAddressRegion" type="VARCHAR" size="64"/>
+    <column name="start_address_country" phpName="StartAddressCountry" type="VARCHAR" size="24"/>
+    <column name="waypoint_address" phpName="WaypointAddress" type="VARCHAR"/>
+    <column name="waypoint_address_place_id" phpName="WaypointAddressPlaceId" type="LONGVARCHAR"/>
+    <column name="waypoint_address_lat" phpName="WaypointAddressLat" type="DECIMAL" size="8" scale="6"/>
+    <column name="waypoint_address_lon" phpName="WaypointAddressLon" type="DECIMAL" size="9" scale="6"/>
+    <column name="waypoint_address_locality" phpName="WaypointAddressLocality" type="VARCHAR" size="64"/>
+    <column name="waypoint_address_region" phpName="WaypointAddressRegion" type="VARCHAR" size="64"/>
+    <column name="waypoint_address_country" phpName="WaypointAddressCountry" type="VARCHAR" size="24"/>
+    <column name="end_address" phpName="EndAddress" type="VARCHAR"/>
+    <column name="end_address_place_id" phpName="EndAddressPlaceId" type="LONGVARCHAR"/>
+    <column name="end_address_lat" phpName="EndAddressLat" type="DECIMAL" size="8" scale="6"/>
+    <column name="end_address_lon" phpName="EndAddressLon" type="DECIMAL" size="9" scale="6"/>
+    <column name="end_address_locality" phpName="EndAddressLocality" type="VARCHAR" size="64"/>
+    <column name="end_address_region" phpName="EndAddressRegion" type="VARCHAR" size="64"/>
+    <column name="end_address_country" phpName="EndAddressCountry" type="VARCHAR" size="24"/>
+    <column name="receiver_name" phpName="ReceiverName" type="VARCHAR" size="48"/>
+    <column name="receiver_phone" phpName="ReceiverPhone" type="VARCHAR" size="96"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="measurements_width" phpName="MeasurementsWidth" type="DOUBLE"/>
+    <column name="measurements_width_unit" phpName="MeasurementsWidthUnit" type="VARCHAR" size="4"/>
+    <column name="measurements_height" phpName="MeasurementsHeight" type="DOUBLE"/>
+    <column name="measurements_height_unit" phpName="MeasurementsHeightUnit" type="VARCHAR" size="4"/>
+    <column name="measurements_depth" phpName="MeasurementsDepth" type="DOUBLE"/>
+    <column name="measurements_depth_unit" phpName="MeasurementsDepthUnit" type="VARCHAR" size="4"/>
+    <column name="measurements_weight" phpName="MeasurementsWeight" type="DOUBLE"/>
+    <column name="measurements_weight_unit" phpName="MeasurementsWeightUnit" type="VARCHAR" size="4"/>
+    <column name="out_now" phpName="OutNow" type="BOOLEAN" size="1"/>
+    <column name="max_arrival_date" phpName="MaxArrivalDate" type="TIMESTAMP"/>
+    <column name="receive_offers" phpName="ReceiveOffers" type="BOOLEAN" size="1"/>
+    <column name="amount_payable" phpName="AmountPayable" type="DOUBLE"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <column name="address_dist_1_dis_value" phpName="AddressDist1DisValue" type="INTEGER" defaultValue="0"/>
+    <column name="address_dist_1_dis_desc" phpName="AddressDist1DisDesc" type="VARCHAR" size="16" defaultValue=""/>
+    <column name="address_dist_1_dur_value" phpName="AddressDist1DurValue" type="INTEGER" defaultValue="0"/>
+    <column name="address_dist_1_dur_desc" phpName="AddressDist1DurDesc" type="VARCHAR" size="16" defaultValue=""/>
+    <column name="address_dist_2_dis_value" phpName="AddressDist2DisValue" type="INTEGER" defaultValue="0"/>
+    <column name="address_dist_2_dis_desc" phpName="AddressDist2DisDesc" type="VARCHAR" size="16" defaultValue=""/>
+    <column name="address_dist_2_dur_value" phpName="AddressDist2DurValue" type="INTEGER"/>
+    <column name="address_dist_2_dur_desc" phpName="AddressDist2DurDesc" type="VARCHAR" size="16" defaultValue=""/>
+    <column name="delivered_at" phpName="DeliveredAt" type="TIMESTAMP"/>
+    <column name="declared_value" phpName="DeclaredValue" type="DOUBLE"/>
+    <column name="additional_address_information" phpName="AdditionalAddressInformation" type="LONGVARCHAR"/>
+    <column name="must_arrive" phpName="MustArrive" type="TIMESTAMP"/>
+    <column name="max_offers" phpName="MaxOffers" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_ignored" idMethod="native" phpName="ShipmentsIgnored">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_offers" idMethod="native" phpName="ShipmentsOffers">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="offer" phpName="Offer" type="DOUBLE"/>
+    <column name="transport_id" phpName="TransportId" type="INTEGER"/>
+    <column name="transport_type" phpName="TransportType" type="INTEGER"/>
+    <column name="estimated_arrival_date" phpName="EstimatedArrivalDate" type="TIMESTAMP"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="accepted_at" phpName="AcceptedAt" type="TIMESTAMP"/>
+    <column name="approximate_arrival_value" phpName="ApproximateArrivalValue" type="DOUBLE"/>
+    <column name="approximate_arrival_desc" phpName="ApproximateArrivalDesc" type="VARCHAR" size="48"/>
+    <column name="approximate_distance_value" phpName="ApproximateDistanceValue" type="DOUBLE"/>
+    <column name="approximate_distance_desc" phpName="ApproximateDistanceDesc" type="VARCHAR" size="48"/>
+    <column name="readed" phpName="Readed" type="BOOLEAN" size="1" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_offers_deleted" idMethod="native" phpName="ShipmentsOffersDeleted">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_offer" phpName="IdOffer" type="INTEGER"/>
+    <column name="deleted_at" phpName="DeletedAt" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_operations_history" idMethod="native" phpName="ShipmentsOperationsHistory">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="uid" phpName="Uid" type="VARCHAR" size="36"/>
+    <column name="datetime" phpName="Datetime" type="TIMESTAMP"/>
+    <column name="valor" phpName="Valor" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_payments" idMethod="native" phpName="ShipmentsPayments">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="preference_id" phpName="PreferenceId" type="VARCHAR" size="96"/>
+    <column name="collection_id" phpName="CollectionId" type="VARCHAR" size="16" primaryKey="true" required="true"/>
+    <column name="collection_status" phpName="CollectionStatus" type="VARCHAR" size="16"/>
+    <column name="merchant_order_id" phpName="MerchantOrderId" type="VARCHAR" size="16"/>
+    <column name="total_paid_amount" phpName="TotalPaidAmount" type="DOUBLE"/>
+    <column name="net_received_amount" phpName="NetReceivedAmount" type="DOUBLE"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="fee_mp" phpName="FeeMp" type="DOUBLE"/>
+    <column name="fee_nv" phpName="FeeNv" type="DOUBLE"/>
+    <column name="card_type_id" phpName="CardTypeId" type="VARCHAR" size="36"/>
+    <column name="card_method_id" phpName="CardMethodId" type="VARCHAR" size="48"/>
+    <column name="card_expiration_month" phpName="CardExpirationMonth" type="INTEGER"/>
+    <column name="card_expiration_year" phpName="CardExpirationYear" type="INTEGER"/>
+    <column name="card_cardholder_identification_type" phpName="CardCardholderIdentificationType" type="VARCHAR" size="16"/>
+    <column name="card_cardholder_identification_number" phpName="CardCardholderIdentificationNumber" type="VARCHAR" size="16"/>
+    <column name="card_cardholder_name" phpName="CardCardholderName" type="VARCHAR" size="96"/>
+    <column name="card_date_created" phpName="CardDateCreated" type="TIMESTAMP"/>
+    <column name="card_date_last_updated" phpName="CardDateLastUpdated" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_payments_extra" idMethod="native" phpName="ShipmentsPaymentsExtra">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="preference_id" phpName="PreferenceId" type="VARCHAR" size="96"/>
+    <column name="collection_id" phpName="CollectionId" type="VARCHAR" size="16" primaryKey="true" required="true"/>
+    <column name="collection_status" phpName="CollectionStatus" type="VARCHAR" size="16"/>
+    <column name="merchant_order_id" phpName="MerchantOrderId" type="VARCHAR" size="16"/>
+    <column name="total_paid_amount" phpName="TotalPaidAmount" type="DOUBLE"/>
+    <column name="net_received_amount" phpName="NetReceivedAmount" type="DOUBLE"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="fee_mp" phpName="FeeMp" type="DOUBLE"/>
+    <column name="fee_nv" phpName="FeeNv" type="DOUBLE"/>
+    <column name="card_type_id" phpName="CardTypeId" type="VARCHAR" size="36"/>
+    <column name="card_method_id" phpName="CardMethodId" type="VARCHAR" size="48"/>
+    <column name="card_expiration_month" phpName="CardExpirationMonth" type="INTEGER"/>
+    <column name="card_expiration_year" phpName="CardExpirationYear" type="INTEGER"/>
+    <column name="card_cardholder_identification_type" phpName="CardCardholderIdentificationType" type="VARCHAR" size="16"/>
+    <column name="card_cardholder_identification_number" phpName="CardCardholderIdentificationNumber" type="VARCHAR" size="16"/>
+    <column name="card_cardholder_name" phpName="CardCardholderName" type="VARCHAR" size="96"/>
+    <column name="card_date_created" phpName="CardDateCreated" type="TIMESTAMP"/>
+    <column name="card_date_last_updated" phpName="CardDateLastUpdated" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_pictures" idMethod="native" phpName="ShipmentsPictures">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_returns" idMethod="native" phpName="ShipmentsReturns">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_reason" phpName="IdReason" type="INTEGER"/>
+    <column name="id_option" phpName="IdOption" type="INTEGER"/>
+    <column name="comments_reason" phpName="CommentsReason" type="LONGVARCHAR"/>
+    <column name="dispatch_expenses" phpName="DispatchExpenses" type="DOUBLE"/>
+    <column name="receiver_fullname" phpName="ReceiverFullname" type="VARCHAR" size="96"/>
+    <column name="receiver_contact" phpName="ReceiverContact" type="VARCHAR" size="96"/>
+    <column name="datetime" phpName="Datetime" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_returns_files" idMethod="native" phpName="ShipmentsReturnsFiles">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_returns_options" idMethod="native" phpName="ShipmentsReturnsOptions">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_returns_reasons" idMethod="native" phpName="ShipmentsReturnsReasons">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_status" idMethod="native" phpName="ShipmentsStatus">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_type" idMethod="native" phpName="ShipmentsType">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="48"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="shipments_users_locations" idMethod="native" phpName="ShipmentsUsersLocations">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="lat" phpName="Lat" type="DECIMAL" size="10" scale="8"/>
+    <column name="lng" phpName="Lng" type="DECIMAL" size="11" scale="8"/>
+    <column name="datetime" phpName="Datetime" type="TIMESTAMP"/>
+    <unique name="unique_shipments_users_locations">
+      <unique-column name="id_shipment"/>
+      <unique-column name="id_user"/>
+      <unique-column name="lat"/>
+      <unique-column name="lng"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users" idMethod="native" phpName="Users">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_company" phpName="IdCompany" type="INTEGER"/>
+    <column name="avatar" phpName="Avatar" type="VARCHAR" size="64"/>
+    <column name="fullname" phpName="Fullname" type="VARCHAR" size="64"/>
+    <column name="first_name" phpName="FirstName" type="VARCHAR" size="32"/>
+    <column name="last_name" phpName="LastName" type="VARCHAR" size="32"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="96"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="96"/>
+    <column name="country" phpName="Country" type="VARCHAR" size="64"/>
+    <column name="country_code" phpName="CountryCode" type="VARCHAR" size="2"/>
+    <column name="home_address" phpName="HomeAddress" type="VARCHAR" size="128"/>
+    <column name="providence_code" phpName="ProvidenceCode" type="VARCHAR" size="16"/>
+    <column name="providence" phpName="Providence" type="VARCHAR" size="56"/>
+    <column name="locality_code" phpName="LocalityCode" type="VARCHAR" size="16"/>
+    <column name="locality" phpName="Locality" type="VARCHAR" size="48"/>
+    <column name="postal_code" phpName="PostalCode" type="VARCHAR" size="16"/>
+    <column name="dni" phpName="Dni" type="VARCHAR" size="32"/>
+    <column name="dni_front" phpName="DniFront" type="VARCHAR" size="32"/>
+    <column name="dni_back" phpName="DniBack" type="VARCHAR" size="32"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" size="48"/>
+    <column name="drivers_license" phpName="DriversLicense" type="VARCHAR" size="48"/>
+    <column name="overall_rating" phpName="OverallRating" type="DOUBLE" defaultValue="0"/>
+    <column name="last_login" phpName="LastLogin" type="TIMESTAMP"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <column name="last_location_lat" phpName="LastLocationLat" type="DECIMAL" size="10" scale="8"/>
+    <column name="last_location_lng" phpName="LastLocationLng" type="DECIMAL" size="11" scale="8"/>
+    <column name="last_location_datetime" phpName="LastLocationDatetime" type="TIMESTAMP"/>
+    <column name="last_location_locality" phpName="LastLocationLocality" type="VARCHAR" size="64"/>
+    <column name="last_location_region" phpName="LastLocationRegion" type="VARCHAR" size="64"/>
+    <column name="last_location_country" phpName="LastLocationCountry" type="VARCHAR" size="24"/>
+    <column name="timezone" phpName="Timezone" type="VARCHAR" size="48"/>
+    <column name="traveling" phpName="Traveling" type="BOOLEAN" size="1" defaultValue="false"/>
+    <column name="verified" phpName="Verified" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="pwd_reset_code" phpName="PwdResetCode" type="VARCHAR" size="8"/>
+    <column name="commission" phpName="Commission" type="INTEGER"/>
+    <column name="disabled" phpName="Disabled" type="BOOLEAN" size="1" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_activity_history" idMethod="native" phpName="UsersActivityHistory">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="type" phpName="Type" type="INTEGER"/>
+    <column name="previous_balance" phpName="PreviousBalance" type="DOUBLE"/>
+    <column name="new_balance" phpName="NewBalance" type="DOUBLE"/>
+    <column name="date_time" phpName="DateTime" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_conveyances" idMethod="native" phpName="UsersConveyances">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="type" phpName="Type" type="INTEGER"/>
+    <column name="brand" phpName="Brand" type="VARCHAR" size="64"/>
+    <column name="model" phpName="Model" type="VARCHAR" size="64"/>
+    <column name="year" phpName="Year" type="INTEGER"/>
+    <column name="domain" phpName="Domain" type="VARCHAR" size="96"/>
+    <column name="main_photo" phpName="MainPhoto" type="VARCHAR" size="64"/>
+    <column name="identification_card" phpName="IdentificationCard" type="VARCHAR" size="64"/>
+    <column name="insurance_policy" phpName="InsurancePolicy" type="VARCHAR" size="255"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_email_verification" idMethod="native" phpName="UsersEmailVerification">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="64"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="4"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_favorites" idMethod="native" phpName="UsersFavorites">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_favorite" phpName="IdFavorite" type="INTEGER"/>
+    <column name="favorite" phpName="Favorite" type="BOOLEAN" size="1"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_mp" idMethod="native" phpName="UsersMp">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="96" required="true"/>
+    <column name="registered_at" phpName="RegisteredAt" type="TIMESTAMP" required="true"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <column name="access_token" phpName="AccessToken" type="VARCHAR" size="255"/>
+    <column name="public_key" phpName="PublicKey" type="VARCHAR" size="255"/>
+    <column name="live_mode" phpName="LiveMode" type="BOOLEAN" size="1"/>
+    <column name="user_id" phpName="UserId" type="INTEGER"/>
+    <column name="token_type" phpName="TokenType" type="VARCHAR" size="64"/>
+    <column name="expires_in" phpName="ExpiresIn" type="BIGINT"/>
+    <column name="scope" phpName="Scope" type="VARCHAR" size="96"/>
+    <column name="customer_id" phpName="CustomerId" type="VARCHAR" size="96"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_mp_cards" idMethod="native" phpName="UsersMpCards">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_push_reg_ids" idMethod="native" phpName="UsersPushRegIds">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="64"/>
+    <column name="reg_id" phpName="RegId" type="LONGVARCHAR"/>
+    <column name="updated_at" phpName="UpdatedAt" type="TIMESTAMP"/>
+    <column name="dev_platform" phpName="DevPlatform" type="VARCHAR" size="48"/>
+    <column name="dev_model" phpName="DevModel" type="VARCHAR" size="64"/>
+    <column name="dev_version" phpName="DevVersion" type="VARCHAR" size="16"/>
+    <column name="dev_manufacturer" phpName="DevManufacturer" type="VARCHAR" size="96"/>
+    <column name="dev_virtual" phpName="DevVirtual" type="BOOLEAN" size="1"/>
+    <column name="enabled" phpName="Enabled" type="BOOLEAN" size="1" defaultValue="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_ratings" idMethod="native" phpName="UsersRatings">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_user" phpName="IdUser" type="INTEGER"/>
+    <column name="id_shipment" phpName="IdShipment" type="INTEGER"/>
+    <column name="rating" phpName="Rating" type="DOUBLE"/>
+    <column name="comments" phpName="Comments" type="LONGVARCHAR"/>
+    <column name="register_at" phpName="RegisterAt" type="TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_settings" idMethod="native" phpName="UsersSettings">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="user_id" phpName="UserId" type="INTEGER"/>
+    <column name="push_new_shipments" phpName="PushNewShipments" type="BOOLEAN" size="1" defaultValue="true"/>
+    <column name="push_offers" phpName="PushOffers" type="BOOLEAN" size="1" defaultValue="true"/>
+    <column name="push_chats" phpName="PushChats" type="BOOLEAN" size="1" defaultValue="true"/>
+    <column name="online" phpName="Online" type="BOOLEAN" size="1" defaultValue="true"/>
+    <column name="rate_base_price" phpName="RateBasePrice" type="DOUBLE"/>
+    <column name="rate_base_price_enabled" phpName="RateBasePriceEnabled" type="BOOLEAN" size="1"/>
+    <column name="rate_price_km" phpName="RatePriceKm" type="DOUBLE"/>
+    <column name="rate_price_km_enabled" phpName="RatePriceKmEnabled" type="BOOLEAN" size="1"/>
+    <column name="rate_percent_night_schedule" phpName="RatePercentNightSchedule" type="DOUBLE"/>
+    <column name="rate_percent_night_schedule_enabled" phpName="RatePercentNightScheduleEnabled" type="BOOLEAN" size="1"/>
+    <column name="rate_percent_non_business_day" phpName="RatePercentNonBusinessDay" type="DOUBLE"/>
+    <column name="rate_percent_non_business_day_enabled" phpName="RatePercentNonBusinessDayEnabled" type="BOOLEAN" size="1"/>
+    <column name="shipments_max_offers" phpName="ShipmentsMaxOffers" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users_social_connect" idMethod="native" phpName="UsersSocialConnect">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="uid" phpName="Uid" type="VARCHAR" size="64" primaryKey="true" required="true"/>
+    <column name="provider" phpName="Provider" type="VARCHAR" size="24" primaryKey="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="64" primaryKey="true" required="true"/>
+    <column name="authentication" phpName="Authentication" type="LONGVARCHAR"/>
+    <column name="info" phpName="Info" type="LONGVARCHAR"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
